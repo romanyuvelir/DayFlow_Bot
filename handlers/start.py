@@ -11,7 +11,7 @@ router = Router()
 @router.message(CommandStart())
 async def cmd_start(message: Message) -> None:
     await UserModel.get_or_create(
-        user_id=message.from_user.id,          # type: ignore[union-attr]
+        user_id=message.from_user.id,           # type: ignore[union-attr]
         username=message.from_user.username or "",  # type: ignore[union-attr]
         first_name=message.from_user.first_name or "",  # type: ignore[union-attr]
     )
@@ -22,9 +22,11 @@ async def cmd_start(message: Message) -> None:
         f"<b>Что я умею:</b>\n"
         f"➕ Добавлять задачи на день\n"
         f"📋 Показывать список дел\n"
-        f"✅ Отмечать выполненные задачи\n"
+        f"⏰ Напоминать в нужное время\n"
+        f"🎯 Помогать фокусироваться (Помодоро)\n"
+        f"🔄 Отслеживать привычки и стрики\n"
         f"📊 Показывать статистику продуктивности\n\n"
-        f"Начнём? Выбери действие в меню ниже 👇",
+        f"Выбери действие в меню 👇",
         reply_markup=main_menu_kb(),
     )
 
@@ -35,15 +37,19 @@ async def cmd_help(message: Message) -> None:
     await message.answer(
         "📖 <b>Помощь по DayFlowBot</b>\n\n"
         "<b>Команды:</b>\n"
-        "/start — Главное меню\n"
-        "/help  — Эта справка\n"
-        "/add   — Добавить задачу\n"
-        "/tasks — Список задач на сегодня\n"
-        "/stats — Статистика продуктивности\n\n"
+        "/start   — Главное меню\n"
+        "/add     — Добавить задачу\n"
+        "/tasks   — Задачи на сегодня\n"
+        "/remind  — Напоминания\n"
+        "/focus   — Фокус-режим\n"
+        "/habits  — Трекер привычек\n"
+        "/stats   — Статистика\n\n"
         "<b>Кнопки меню:</b>\n"
-        "➕ <b>Добавить задачу</b> — создать новое дело\n"
-        "📋 <b>Мои задачи</b>     — список дел на сегодня\n"
-        "📊 <b>Статистика</b>     — твой прогресс\n\n"
-        "💡 <i>Скоро: напоминания, фокус-режим и трекер привычек!</i>",
+        "➕ <b>Добавить задачу</b> — создать дело на сегодня\n"
+        "📋 <b>Мои задачи</b>     — список и управление\n"
+        "⏰ <b>Напоминания</b>    — к задаче или отдельное\n"
+        "🎯 <b>Фокус-режим</b>    — Помодоро или своё время\n"
+        "🔄 <b>Привычки</b>       — стрики и статистика\n"
+        "📊 <b>Статистика</b>     — твой прогресс",
         reply_markup=main_menu_kb(),
     )
